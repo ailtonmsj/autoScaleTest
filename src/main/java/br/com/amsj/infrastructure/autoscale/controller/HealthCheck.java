@@ -12,24 +12,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping
 public class HealthCheck {
 	
-	private boolean healthcheckstatus = true; 
+	private static final ResponseEntity<String> HEALTH_CHECK_OK = ResponseEntity.ok("Up and Running");
+	private static final ResponseEntity<String> HEALTH_CHECK_ERROR = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	
+	private static ResponseEntity<String> healthCheckResult = HEALTH_CHECK_OK;
 	
 	@GetMapping(path = "/")
 	public ResponseEntity<String> healthcheck(){
 		
-		if(this.healthcheckstatus) {
-			return ResponseEntity.ok().build();
-		}else {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		return healthCheckResult;
 	}
 	
 	@PutMapping(path = "/{healthcheckstatus}")
-	public ResponseEntity<Void> healthcheck(@PathVariable(name = "healthcheckstatus", required = true) boolean healthcheckstatus){
+	public ResponseEntity<String> healthcheck(@PathVariable(name = "healthcheckstatus", required = true) boolean healthCheckStatus){
 		
-		this.healthcheckstatus = healthcheckstatus;
+		if(healthCheckStatus) {
+			healthCheckResult = HEALTH_CHECK_OK;
+		}else {
+			healthCheckResult = HEALTH_CHECK_ERROR;
+		}
 		
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok("Health check status will be " + healthCheckResult.getStatusCodeValue() + " now");
 	}
 
 }
