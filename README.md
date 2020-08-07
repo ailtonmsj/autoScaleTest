@@ -8,4 +8,10 @@ curl localhost:8080/stresscpu?seconds=10
 ### health check
 curl localhost:8080/
 
+### change health check response
+curl localhost:8080/{healthcheckstatus}
+#### examples:
+curl localhost:8080/false\
+curl localhost:8080/true
+
 
