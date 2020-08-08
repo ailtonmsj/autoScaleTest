@@ -29,6 +29,7 @@ public class StressCpu {
 		
 		new StressCpuService().stress(seconds);
 		
+		
 		return ResponseEntity.ok("Success");
 	}
 

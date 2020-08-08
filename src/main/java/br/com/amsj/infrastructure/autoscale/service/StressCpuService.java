@@ -4,10 +4,10 @@ public class StressCpuService {
 
 	public void stress(int seconds) {
 		long limitDateTimeMillis = System.currentTimeMillis() + (seconds * 1000);
-		new Stress(limitDateTimeMillis).start();
+		new Stress(limitDateTimeMillis).run();
 	}
 
-	private class Stress extends Thread {
+	private class Stress implements Runnable {
 		long limitDateTimeMillis;
 
 		Stress(long limitDateTimeMillis) {
@@ -21,7 +21,6 @@ public class StressCpuService {
 			try {
 				while (System.currentTimeMillis() < limitDateTimeMillis) {
 					if (System.currentTimeMillis() % PARTIAL_TIME == 0) {
-						System.out.println(System.currentTimeMillis());
 						Thread.sleep((long)((1 - CPU_LOAD) * PARTIAL_TIME));
 					}
 				}
