@@ -2,9 +2,12 @@ package br.com.amsj.infrastructure.autoscale.service;
 
 public class StressCpuService {
 
-	public void stress(int seconds) {
+	public void stress(int seconds, int threads) {
 		long limitDateTimeMillis = System.currentTimeMillis() + (seconds * 1000);
-		new Stress(limitDateTimeMillis).run();
+		
+		for(int count=0; threads>count; count++) {
+			new Stress(limitDateTimeMillis).run();
+		}
 	}
 
 	private class Stress implements Runnable {
