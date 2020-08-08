@@ -1,7 +1,6 @@
 package br.com.amsj.infrastructure.autoscale.controller;
 
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,7 @@ public class HealthCheck {
 
 	static {
 		try {
-			LOCAL_HOST = InetAddress.getLocalHost().toString();
+			LOCAL_HOST = InetAddress.getLocalHost().getHostAddress();
 		} catch (Exception e) {
 			e.printStackTrace();
 			LOCAL_HOST = "Unknown host";
