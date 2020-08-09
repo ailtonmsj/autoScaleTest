@@ -1,7 +1,7 @@
 HELP.md
-target/
 bin/
 .attach*
+### target/
 *.log
 
 !.mvn/wrapper/maven-wrapper.jar
@@ -35,3 +35,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### only for this project:
+target/classes/
+target/generated-sources/
+target/maven-archiver/
+target/maven-status/
+target/*.original
+
