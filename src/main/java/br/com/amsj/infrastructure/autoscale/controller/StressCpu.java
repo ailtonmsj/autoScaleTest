@@ -27,21 +27,21 @@ public class StressCpu {
 	private static String LOCAL_HOST;
 
 	@GetMapping("/stresscpu")
-	public ResponseEntity<String> stressCpu(@RequestParam int seconds) throws InterruptedException {
+	public ResponseEntity<String> stressCpu(@RequestParam int seconds, @RequestParam int qtdThread) throws InterruptedException {
 		
-		return stress(seconds);
+		return stress(seconds, qtdThread);
 	}
 	
-	private ResponseEntity<String> stress(int seconds) throws InterruptedException {
+	private ResponseEntity<String> stress(int seconds, int qtdThread) throws InterruptedException {
 		
 		long limitTime = 10 * 60; // max limit 10 minutes
+		long limitThread = 8;
 		
-		if(seconds > limitTime) {
+		if(seconds > limitTime || qtdThread > limitThread) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid parameter");
 		}
 		
-		new StressCpuService().stress(seconds);
-		
+		new StressCpuService().stress(seconds, qtdThread);
 		
 		return ResponseEntity.ok("Success on " + LOCAL_HOST);
 	}
